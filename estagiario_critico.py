@@ -1,8 +1,8 @@
-import openai
+from openai import OpenAI
 import streamlit as st
 import os
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 modelo_ideal = """
 Daniel era um jovem entregador, responsável e dedicado, que trabalhava em uma agência dos correios em uma pequena cidade do interior...
@@ -34,14 +34,16 @@ def analisar_criterio(criterio, ideal, teste):
     Justificativa: ...
     """
 
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "user", "content": prompt}
         ]
     )
-    return response['choices'][0]['message']['content']
 
+    return response.choices[0].message.content
+
+# --- Streamlit App ---
 st.title("Estagiário Crítico - Avaliação de Roteiro")
 
 roteiro_teste = st.text_area("Cole aqui o roteiro para análise:", height=600)
