@@ -35,7 +35,7 @@ def analisar_criterio(criterio, ideal, teste):
     """
 
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",  # aqui tá o downgrade estratégico
         messages=[
             {"role": "user", "content": prompt}
         ]
